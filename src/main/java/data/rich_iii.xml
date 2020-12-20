@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<customers xmlns="http://www.springframework.org/schema/beans">
+    <customer>
+        <id>#001</id>
+        <name>Micke</name>
+        <address>Najing</address>
+    </customer>
+    <customer>
+        <id>#002</id>
+        <name>Car</name>
+        <address>Suzhou</address>
+    </customer>
+    <customer>
+        <id>#003</id>
+        <name>Jimmy</name>
+        <address>ChengDu</address>
+    </customer>
+    <customer>
+        <id>#004</id>
+        <name>Henry</name>
+        <address>Xi'an</address>
+    </customer>
+</customers>

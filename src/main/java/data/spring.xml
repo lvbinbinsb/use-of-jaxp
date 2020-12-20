@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--扫描service包-->
+    <context:component-scan base-package="ssm.shiro.service.impl"></context:component-scan>
+    <!--创建dbcp数据源连接池-->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${driver}"></property>
+        <property name="url" value="${url}"></property>
+        <property name="username" value="${user}"></property>
+        <property name="password" value="${password}"></property>
+    </bean>
+    <!--创建mybatis的SqlSessionFactory工厂类对象-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <!---->
+        <!--<property name="configLocation" value="classpath:mybatis.xml"></property>-->
+        <!--指定mapper文件的地址 此处可以使用*号同配置，表示加载包下所有的xml结尾的mapper文件-->
+        <property name="mapperLocations" value="classpath:/mapper/*.xml"></property>
+    </bean>
+    <!--配置扫描mybatis的dao接口 ，会为dao接口创建myabtis的dao接口实现类对象，放置到session工厂中-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="ssm.shiro.dao"></property>
+    </bean>
+    <!--声明spring 的事物管理器对象-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--声明以注解的方式配置spring 的事物-->
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+    <!--引入spring 和shiro集成的主配置文件-->
+    <import resource="classpath:spring-shiro.xml"></import>
+</beans>

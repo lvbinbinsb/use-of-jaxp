@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<customers xmlns="http://www.springframework.org/schema/beans"
+           xmlns:anotherURI="http://www.springframework.org/schema/beans2">
+    <customer>
+        <id>#001</id>
+        <name>Micke</name>
+        <address>Najing</address>
+    </customer>
+    <anotherURI:customer>
+        <anotherURI:id>#001</anotherURI:id>
+        <anotherURI:name>Micke</anotherURI:name>
+    </anotherURI:customer>
+</customers>
