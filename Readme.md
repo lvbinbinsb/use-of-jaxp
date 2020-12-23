@@ -124,14 +124,91 @@ fNamespace就是我们设置的namespaceaware的值，可以看出来为false的
 ![](https://img2020.cnblogs.com/blog/1550387/202012/1550387-20201220201404729-128091587.png)
 
     
+###XML基本
+XML全称是Extensible Markup Language，可扩展标记语言，为啥不叫EML呢。  1993年诞生HTML，1998年出现XML。
+HTML我们都熟，说说XML和HTML不一样的特点：1。没有预置标签，2。可以定义新的标记语言，扩展好，3。区分大小写，4。有语法要求
       
+安利一款XML编辑器 XMLSpy。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    <bean id="user" class="com.model.User" init-method="init">
+    </bean>
+</beans>
+```
+上述例子是我们大概率接触到的spring的xml配置文件，类似的还有mybatis的配置文件。两者都是XML，但是开头写法却不一样，其实这是XML的两种语义约束。
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <!-- 配置数据库连接信息 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis" />
+                <property name="username" value="root" />
+                <property name="password" value="" />
+            </dataSource>
+        </environment>
+    </environments>
+
+</configuration>
+```
+     
+ XML从一方面可以分为三种：
+ 1。格式不行，存在明显语法错误；
+ 2。格式行，但是没有按照框架（就是XML语义约束）来写。
+ 3。格式行，也按照语义约束来了。     
+ 这不就是我们高中写议论文的分类吗，高中语文老师都会给我们应试教育议论文的模板，先展示文采，话题发散，阐明观点，承上启下，例子证明，总结升华观点。
+ 1花里胡哨，不按照模板来；2按照模板来了，（比如例子证明，某某某历史名人说过，多个朋友多条路？），这就不符合约束了；3按照模子，遵循约定。
+ 
+ 从上可以得出结论：XML有两点约束：1.格式约束  2. 语义约束
+ 
+ #### XML的格式约束
+ XML的格式约束有几点：
+ 1.   XML第一行是XML文档声明， <?xml version="1.0" ?>
+ 2.   XML有且只能有一个根节点
+ 3.   XML的标签要么开始标签和结束标签配对，要么空标签出现， 标签不能出现混乱嵌套
+ 4.   XML标签的属性不能单独出现
+ 
+ 
+ ##### 1.XML文档声明
+ XML第一行我们见都是`<?xml version="1.0" ?>`
+ 这行的作用就是告诉这是一个XML文档，遵循XML文档规范的XML，version是必须的，通常都使用1.0 
+ 其实还有两个属性，
+ encoding: encoding只是告诉使用它的程序解码用的字符集。  本身我们书写XML还有一个编码，比如本地可能你会使用UTF-8或者GB2312编码，这个属性只是告诉外部解码该用什么字符集。
+ standalone: 声明该文档是否需要引用其他资源，只有yes|no。 这个我只见过。
+ 
+ ##### 2.XML的一个根节点
+ 所谓一个根节点就是只能有一个根元素。如果像如下，是肯定不可以的。XML可以解析成树结构，如果多个根节点，那就是解析成森林了...
+ ```xml
+<?xml version="1.0" ?>
+<Root>
+    ......
+</Root>
+<Root2>
+</Root2>
+```
+ 
+#### 3.XML的标签
+XML严格区分大小写。<x></x>就必须配对出现，或者<x/>出现。 这一点和HTML还是不同的。
+`<x name="11"></x>` XML的标签属性不能是空值，不能出现多个重名属性，不能像这样 `<x name></x>` 。这一样也和前端区别挺大，写前端的同学写XML要尤为注意。
       
+XML标签中间的多个空格包括换行都会保留下来， 如果在XML标签中书写了特殊含义的字符，就会引起格式错误。比如`<result> 1+1<2 </result>`      
+XML遇到<号，认为是标签头，结果匹配不到结束标签，这样就格式错误了。  解决方案有两种：
+      1. 转义, <转义成 &lt;   
+      2. CDATA标记， <![CDATA[包裹的内容]]>，原因是XML不会对CDATA里的内容做处理
       
-      
-      
-      
-      
-      
+
+额外小记一种XML处理指令，<?处理指令名  信息?>      
       
       
       
